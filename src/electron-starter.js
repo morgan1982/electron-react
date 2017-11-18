@@ -1,21 +1,25 @@
-const electron = require('electron');
-const app = electron.app
+const { app, BrowserWindow, ipcMain, Menu } = require('electron');
 // Module to create native browser window.
-const BrowserWindow = electron.BrowserWindow
+
 
 const path = require('path')
 const url = require('url')
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
-let mainWindow
+let mainWindow;
 
 function createWindow () {
   // Create the browser window.
   mainWindow = new BrowserWindow({
                               width: 800,
                               height: 600,
-                              frame: false
+                              frame: false,
+                              webPreferences: {
+                                nodeIntegration: false,
+                                preload: __dirname + '/preload.js'
+                              }
+
                             })
 
   // and load the index.html of the app.
@@ -53,6 +57,18 @@ app.on('activate', function () {
   if (mainWindow === null) {
     createWindow()
   }
+})
+
+ipcMain.on("mainWindowLoaded", function ()  {
+  console.log("pass!");
+  rows = "hello";
+  mainWindow.webContents.send("result", rows);
+
+
+})
+ipcMain.on('ping', () => {
+  console.log("ping is here");
+  mainWindow.webContents.send("pong");
 })
 
 // In this file you can include the rest of your app's specific main process
