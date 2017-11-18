@@ -1,0 +1,15 @@
+
+
+♦ notes on create window with react-router and electron
+
+from main electron file create addWindow function
+  if i add a new browser window it will show the window with the router but it will not hace access to the ipc renderer
+  (a prebuid file was produced to the root of the project)
+
+  in order to solve that the function will not create a new browser window but instead it will just load the new url that the react router points at.
+
+  that solves the problem but it will not pop a new window 
+
+  • in order to pop a new window use the newBrowserwindow and point to the path of the route created with the react router.
+  (have to solve the problem to import the ipc 
+  or -- a solution would be to send the data to the app component of the app --HAVE TO TRY THAT--)

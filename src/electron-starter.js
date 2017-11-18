@@ -1,20 +1,21 @@
 const { app, BrowserWindow, ipcMain, Menu } = require('electron');
-// Module to create native browser window.
-
-
 const path = require('path')
 const url = require('url')
 
+const { knex } = require("../db/connection");
+const { createTable } = require("../db/create_schema");
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
+
 let mainWindow;
+let addWindow;
 
 function createWindow () {
   // Create the browser window.
   mainWindow = new BrowserWindow({
                               width: 800,
                               height: 600,
-                              frame: false,
+                              // frame: false,
                               webPreferences: {
                                 nodeIntegration: false,
                                 preload: __dirname + '/preload.js'
@@ -28,11 +29,20 @@ function createWindow () {
   // Open the DevTools.
   mainWindow.webContents.openDevTools()
 
+  // build the mainmenu
+  const mainMenu = Menu.buildFromTemplate(mainMenuTemplate);
+  
+  
+  // insert the menu
+  Menu.setApplicationMenu(mainMenu);
+
   // Emitted when the window is closed.
   mainWindow.on('closed', function () {
     // Dereference the window object, usually you would store windows
     // in an array if your app supports multi windows, this is the time
     // when you should delete the corresponding element.
+
+    // app.quit()
     mainWindow = null
   })
 }
@@ -71,5 +81,68 @@ ipcMain.on('ping', () => {
   mainWindow.webContents.send("pong");
 })
 
-// In this file you can include the rest of your app's specific main process
-// code. You can also put them in separate files and require them here.
+
+
+ipcMain.on("mainWindowLoaded", function ()  {
+    console.log("main window loaded..");
+})
+
+function createAddWindow() {
+//   addWindow = new BrowserWindow({
+//      width: 600,
+//      height: 500,
+//      title: 'Add new record'
+//  });
+ //load the html file
+mainWindow.loadURL('http://localhost:3000/add');
+ // garbage collection
+//  addWindow.on('closed', () => {
+//      addWindow = null;
+
+}
+
+
+const mainMenuTemplate = [
+  {
+      label: 'File',
+      submenu: [
+          {
+              label: 'Add record',
+              accelerator: process.platform == 'darwin' ? 'Command + Shift + A' : 'Ctrl + Shif + a',
+              click() {
+                  createAddWindow();
+              }
+          },
+          {
+              label: 'Delete record',
+              click() {
+                  mainWindow.webContents.send('item:clear');
+              }
+          },
+          {
+              label: 'Insert Window',
+              click() {
+                  createInsertWindow();
+              }
+          },
+          {
+              label: 'Quit',
+              accelerator: process.platform == 'darwin' ? 'Command + Q' : 'Ctrl + Q',
+              click() {
+                  app.quit();
+              }
+          }
+      ]
+  },
+  {
+      label: 'schemas',
+      submenu: [
+          {
+          label: 'create table',
+          click() {
+              createTable("keychain");
+              }
+          }
+      ]
+  }
+]

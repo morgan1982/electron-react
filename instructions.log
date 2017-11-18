@@ -1,0 +1,9 @@
+to rebuild with sqlite3 win 10
+
+1) npm install –global –production windows-build-tools
+to install python 2.7 and the rest
+
+2) npm install electron-rebuild --save--dev
+installs the module
+
+3) run from powershell > ./node_modules/.bin/electron-rebuild
