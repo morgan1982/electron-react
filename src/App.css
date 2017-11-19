@@ -26,3 +26,59 @@
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+button {
+  margin-right: 5px;
+  /* color: seagreen;
+  border: 2px solid skyblue; */
+}
+
+.btn-group {
+  /* margin: 5px 10px; */
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin: 10px 0px;
+}
+.btn {
+  background: black;
+  border: none;
+  font-size: 16px;
+  border-radius: 2px;
+  width: 100px;
+  /* height: 40px; */
+  text-align: center;
+  display: block;
+  padding: 7px 0;
+  margin: 10px auto;
+  text-decoration: none;
+  font-weight: bold;
+  color: snow;
+  
+}
+.btn:hover {
+  color: mediumturquoise;
+  box-shadow: 2px 2px 2px grey;
+}
+.active {
+  /* color: aqua; */
+  /* border-bottom: 2px solid aqua; */
+  -webkit-animation: mymove 1s infinite;
+  -webkit-animation-timing-function: linear;
+}
+@-webkit-keyframes mymove {
+  from {border-bottom: 3px solid hotpink;}
+  to {border-bottom: 3px solid aqua;}
+}
+
+li {
+  margin-right: 5px;
+}
+.btn-container {
+  display: flex;
+}
+#import {
+  padding: 5px;
+  font-size: 12px;
+  height: 30px;
+  width: 70px;
+}
