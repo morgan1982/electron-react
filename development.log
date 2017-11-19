@@ -13,3 +13,6 @@ from main electron file create addWindow function
   • in order to pop a new window use the newBrowserwindow and point to the path of the route created with the react router.
   (have to solve the problem to import the ipc 
   or -- a solution would be to send the data to the app component of the app --HAVE TO TRY THAT--)
+
+  • to open links to the browser
+  require("shell").openExternal("http://www.example.com");

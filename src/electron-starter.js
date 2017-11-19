@@ -79,6 +79,18 @@ ipcMain.on("mainWindowLoaded", function ()  {
 ipcMain.on('ping', () => {
   console.log("ping is here");
   mainWindow.webContents.send("pong");
+  //insert test
+  knex("keychain").insert({
+      name: "udemy",
+      web: "www.udemy.com",
+      user: "John",
+      password: "test",
+      email: "JohnDoe@gmail.com",
+  }).then(() => {
+      console.log("record inserted")
+  }).catch((e) => {
+        console.log(e);
+  });
 })
 
 
@@ -87,20 +99,18 @@ ipcMain.on("mainWindowLoaded", function ()  {
     console.log("main window loaded..");
 })
 
+
+// Routes controlled by react router
 function createAddWindow() {
-//   addWindow = new BrowserWindow({
-//      width: 600,
-//      height: 500,
-//      title: 'Add new record'
-//  });
- //load the html file
+
 mainWindow.loadURL('http://localhost:3000/add');
- // garbage collection
-//  addWindow.on('closed', () => {
-//      addWindow = null;
 
 }
+// form separate window
+function addForm() {
 
+    form.loadURL("http://localhost:3000/form");
+}
 
 const mainMenuTemplate = [
   {
@@ -110,7 +120,7 @@ const mainMenuTemplate = [
               label: 'Add record',
               accelerator: process.platform == 'darwin' ? 'Command + Shift + A' : 'Ctrl + Shif + a',
               click() {
-                  createAddWindow();
+                  addForm();
               }
           },
           {
@@ -141,6 +151,15 @@ const mainMenuTemplate = [
           label: 'create table',
           click() {
               createTable("keychain");
+              }
+          },
+          {
+              label: 'select records',
+              click() {
+                  knex.select().table('keychain')
+                    .then((data) => {
+                        mainWindow.webContents.send("items", data);
+                    })
               }
           }
       ]

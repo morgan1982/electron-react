@@ -7,6 +7,7 @@ import Home from './components/home';
 import Header from './components/Header';
 import Add from './components/add';
 import Record from "./components/record";
+import Form from "./components/addForm";
 const ipc = window.ipcRenderer;
 // const { app } = electron.remote;
 
@@ -20,8 +21,10 @@ class App extends Component {
 
     this.state = {
       id : '',
-      appName: "react"
+      appName: "react",
+      name: ''
     };
+
   }
 
 
@@ -45,11 +48,16 @@ class App extends Component {
       console.log('pong was here');
 
     })
+    ipc.on('items', (e, items) => {
+        // console.log(items[0].name);
+        var appName = items[0].name;
+        this.setState({name: appName});
+    })
 
   }
 
   render() {
-    console.log(this.state.id);
+    console.log("state is: ", this.state.name);
     // console.log(this.props)
 
     return (
@@ -62,8 +70,14 @@ class App extends Component {
             <Route exact path="/" component={Home}/>
             <Route path="/add" component={Add}/>
             <Route path={"/:id"} render={ (props) => (
-              <Record name="john"/>
+              <Record name= { this.state.name }/>
             )}/>
+            <Route path='/form' render= {
+              (props) => {
+                <Form name="Foo" />
+              }
+            }/>
+            
             </Switch>
 
             <form onSubmit={this.onSubmit}>
