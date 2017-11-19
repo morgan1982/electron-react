@@ -7,3 +7,5 @@ to install python 2.7 and the rest
 installs the module
 
 3) run from powershell > ./node_modules/.bin/electron-rebuild
+
+
