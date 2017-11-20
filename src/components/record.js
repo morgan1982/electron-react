@@ -14,7 +14,7 @@ export default class Record extends Component {
 
         return (
             <div>
-                <div>Records</div>
+                <div>Individual Record</div>
                 <div>{this.props.name}</div>
                 <div></div>
             </div>

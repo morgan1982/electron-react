@@ -7,9 +7,11 @@ import Home from './components/home';
 import Header from './components/Header';
 import Add from './components/add';
 import Record from "./components/record";
+import Records from "./components/Records";
 import Form from "./components/addForm";
+import Banner from "./components/Banner";
 const ipc = window.ipcRenderer;
-// const { app } = electron.remote;
+
 
 class App extends Component {
 
@@ -22,7 +24,8 @@ class App extends Component {
     this.state = {
       id : '',
       appName: "react",
-      name: ''
+      name: '',
+      records: []
     };
 
   }
@@ -49,15 +52,20 @@ class App extends Component {
 
     })
     ipc.on('items', (e, items) => {
-        // console.log(items[0].name);
-        var appName = items[0].name;
-        this.setState({name: appName});
+        this.setState({records: items});
+    })
+    ipc.on('filtered', (e, items) => {
+      // console.log(items);
+      this.setState({records: items})
     })
 
   }
 
   render() {
-    console.log("state is: ", this.state.name);
+    // console.log("state is: ", this.state.name);
+    // console.log(this.state.records);
+    // testing props
+    let x = 24;
     // console.log(this.props)
 
     return (
@@ -66,20 +74,26 @@ class App extends Component {
       <Router>
         <div>
         <Header className="App-header" />
+        <Banner logo="hey"/>
         <Switch>
-            <Route exact path="/" component={Home}/>
-            <Route path="/add" component={Add}/>
-            <Route path={"/:id"} render={ (props) => (
-              <Record name= { this.state.name }/>
-            )}/>
-            <Route path='/form' render= {
-              (props) => {
+            <Route exact path="/" render={Home}/>
+            <Route exact path="/add" render={Add}/>
+            {/* <Route exact path={"/:id"} render={ (props) => (
+              <Record name= { this.state.name } x={x}/>
+            )}/> */}
+            <Route exact path='/form' render= {
+              (props) => (
                 <Form name="Foo" />
-              }
+              )
+            }/>
+            <Route exact path="/records" render= {
+              (props) => (
+                <Records records={ this.state.records }/>
+              )
             }/>
             
             </Switch>
-
+              <p>{console.log(  4 === 4 ? true: false)}</p>
             <form onSubmit={this.onSubmit}>
               <input 
               type="text"

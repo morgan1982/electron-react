@@ -79,24 +79,29 @@ ipcMain.on("mainWindowLoaded", function ()  {
 ipcMain.on('ping', () => {
   console.log("ping is here");
   mainWindow.webContents.send("pong");
-  //insert test
-  knex("keychain").insert({
-      name: "udemy",
-      web: "www.udemy.com",
-      user: "John",
-      password: "test",
-      email: "JohnDoe@gmail.com",
-  }).then(() => {
-      console.log("record inserted")
-  }).catch((e) => {
-        console.log(e);
-  });
+//   insert test
+//   knex("keychain").insert({
+//       name: "udemy",
+//       web: "www.udemy.com",
+//       user: "John",
+//       password: "test",
+//       email: "JohnDoe@gmail.com",
+//   }).then(() => {
+//       console.log("record inserted")
+//   }).catch((e) => {
+//         console.log(e);
+//   });
 })
 
-
-
-ipcMain.on("mainWindowLoaded", function ()  {
-    console.log("main window loaded..");
+// Query for one record
+ipcMain.on("name", (e, name) => {
+    console.log(name);
+    knex('keychain').where('name', name)
+        .then((item) => {
+            console.log(item);
+            mainWindow.webContents.send("filtered", item);
+        
+        })
 })
 
 
@@ -113,55 +118,55 @@ function addForm() {
 }
 
 const mainMenuTemplate = [
-  {
-      label: 'File',
-      submenu: [
-          {
-              label: 'Add record',
-              accelerator: process.platform == 'darwin' ? 'Command + Shift + A' : 'Ctrl + Shif + a',
-              click() {
-                  addForm();
-              }
-          },
-          {
-              label: 'Delete record',
-              click() {
-                  mainWindow.webContents.send('item:clear');
-              }
-          },
-          {
-              label: 'Insert Window',
-              click() {
-                  createInsertWindow();
-              }
-          },
-          {
-              label: 'Quit',
-              accelerator: process.platform == 'darwin' ? 'Command + Q' : 'Ctrl + Q',
-              click() {
-                  app.quit();
-              }
-          }
-      ]
-  },
-  {
-      label: 'schemas',
-      submenu: [
-          {
-          label: 'create table',
-          click() {
-              createTable("keychain");
-              }
-          },
-          {
-              label: 'select records',
-              click() {
-                  knex.select().table('keychain')
-                    .then((data) => {
-                        mainWindow.webContents.send("items", data);
-                    })
-              }
-          }
-      ]
-  }
+    {
+        label: 'File',
+        submenu: [
+            {
+                label: 'Add record',
+                accelerator: process.platform == 'darwin' ? 'Command + Shift + A' : 'Ctrl + Shif + a',
+                click() {
+                    addForm();
+                }
+            },
+            {
+                label: 'Delete record',
+                click() {
+                    mainWindow.webContents.send('item:clear');
+                }
+            },
+            {
+                label: 'Insert Window',
+                click() {
+                    createInsertWindow();
+                }
+            },
+            {
+                label: 'Quit',
+                accelerator: process.platform == 'darwin' ? 'Command + Q' : 'Ctrl + Q',
+                click() {
+                    app.quit();
+                }
+            }
+        ]
+    },
+    {
+        label: 'schemas',
+        submenu: [
+            {
+            label: 'create table',
+            click() {
+                createTable("keychain");
+                }
+            },
+            {
+                label: 'select records',
+                click() {
+                    knex.select().table('keychain')
+                      .then((data) => {
+                          mainWindow.webContents.send("items", data);
+                      })
+                }
+            }
+        ]
+    }
 ]

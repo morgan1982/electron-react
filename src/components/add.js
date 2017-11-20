@@ -3,13 +3,12 @@ import { withRouter } from "react-router-dom";
 
 class Add extends Component {
 
-    NavigateHome () {
+    NavigateHome (props) {
         this.props.history.push("/");
     }
 
 
     render () {
-
 
         return (
     <div>

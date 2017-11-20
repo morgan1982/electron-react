@@ -1,5 +1,5 @@
 import React from 'react';
-import {Link, NavLink} from 'react-router-dom';
+import {NavLink} from 'react-router-dom';
 
 const Header = (props) => {
 
@@ -8,6 +8,8 @@ const Header = (props) => {
                 <NavLink type="button"  to="/" exact activeClassName="active"className="btn">Home</NavLink>
                 <NavLink type="button" to="/add" activeClassName="active" className="btn">Add</NavLink>
                 <NavLink type="button" to="/10" activeClassName="active" className="btn">Record</NavLink>
+                <NavLink type="button" to="/records" activeClassName="active" className="btn">Records</NavLink>
+                
 
         </div>
 
