@@ -26,7 +26,7 @@ export default class Records extends Component {
         event.preventDefault();
         window.ipcRenderer.send("name", this.state.value);
         window.ipcRenderer.on("filtered", () => {
-            // console.log(this.props.records[0].name);
+
             this.setState({
                 name: this.props.records[0].name,
                 id: this.props.records[0].id,
@@ -34,8 +34,7 @@ export default class Records extends Component {
                 pass: this.props.records[0].password,
                 web: this.props.records[0].web
             });
-            // console.log("event received");
-            // console.log(this.state.name);
+
         })
     }
     handleChange(event) {
@@ -46,17 +45,8 @@ export default class Records extends Component {
 
 
 render () {
-    // console.log(this.props.records[0].name);
-    console.log(this.state.id);
-    console.log(this.state.name);
-    console.log(this.state.pass);
-    console.log(this.state.email);
-    console.log(this.state.web);
+
     
-    
-
-
-
     return (
         <div>
         <form onSubmit={this.handleSubmit}>
