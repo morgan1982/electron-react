@@ -40,19 +40,19 @@ button {
   margin: 10px 0px;
 }
 .btn {
-  background: black;
+  /* background: black;
   border: none;
   font-size: 16px;
   border-radius: 2px;
   width: 100px;
   /* height: 40px; */
-  text-align: center;
+  /* text-align: center;
   display: block;
   padding: 7px 0;
   margin: 10px auto;
   text-decoration: none;
   font-weight: bold;
-  color: snow;
+  color: snow; */ 
   
 }
 .btn:hover {

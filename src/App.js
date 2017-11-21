@@ -10,36 +10,76 @@ import Record from "./components/record";
 import Records from "./components/Records";
 import Form from "./components/addForm";
 import Banner from "./components/Banner";
+import Settings from "./components/Settings";
 const ipc = window.ipcRenderer;
-
 
 class App extends Component {
 
-  constructor (props) {
+  constructor(props) {
     super(props);
 
-    this.onSubmit = this.onSubmit.bind(this);
-    this.onInput = this.onInput.bind(this);
+    this.onSubmit = this
+      .onSubmit
+      .bind(this);
+    this.onInput = this
+      .onInput
+      .bind(this);
 
     this.state = {
-      id : '',
+      id: '',
       appName: "react",
       name: '',
       records: []
     };
-
+    console.log("consructor");
+    setTimeout(() => {
+      this.setState({
+        status: 1
+      })
+    }, 2000)
   }
 
+  componentWillMount() {
+    console.log("componentWillmount");
+  }
+  componentDidMount() {
+    console.log('component did mount')
+  }
+  componentWillReceiveProps(nextProps) {
+    console.log("componentWillReiceive props", nextProps);
+  }
+  shouldComponentUpdate(nextProps, nextState) {
+    console.log("should component update", nextProps, nextState);
+    return true;
+  }
+  componentWillUpdate(nextProps, nextState) {
+    console.log("component will update", nextProps, nextState);
+  }
+  componentDidUpdate(prevProps, prevState) {
+    console.log("componentDid update", prevProps, prevState);
+  }
+  componentWillUnmount() {
+    console.log("componentWillunmount");
+  }
+  //pass method to the childs
+  onGreet() {
+    alert("error");
+  }
+  // name comes from the method inside the settins component
+  onAppChange(name) {
+    this.setState({appName: name})
+  }
 
   onInput(e) {
-    this.setState({
-      id: e.target.value
-    })
+    this.setState({id: e.target.value})
   }
   onSubmit() {
     // erro props does not have property
-    this.props.onSubmit(this.state.id);
+    this
+      .props
+      .onSubmit(this.state.id);
   }
+
 
   componentDidMount() {
     ipc.on('test', (e, args) => {
@@ -52,7 +92,7 @@ class App extends Component {
 
     })
     ipc.on('items', (e, items) => {
-        this.setState({records: items});
+      this.setState({records: items});
     })
     ipc.on('filtered', (e, items) => {
       // console.log(items);
@@ -62,47 +102,63 @@ class App extends Component {
   }
 
   render() {
-    // console.log("state is: ", this.state.name);
-    // console.log(this.state.records);
+    // console.log("state is: ", this.state.name); console.log(this.state.records);
     // testing props
     let x = 24;
     // console.log(this.props)
+    let user = {
+      name: "john",
+      lastName: "doe",
+      age: 25,
+      hobbies: [
+        "catch",
+        "surfing",
+        "eating",
+        "sleeping",
+        "books",
+        "painting"
+      ]
+    }
 
     return (
 
-      
       <Router>
         <div>
-        <Header className="App-header" />
-        <Banner logo="hey"/>
-        <Switch>
+          <h1>{this.state.appName}</h1>
+          <Header className="App-header"/>
+          <Settings user={user} 
+                    greet={this.onGreet}
+                    appChange = {this.onAppChange.bind(this)}
+                    >
+            <p>the children</p>
+          </Settings>
+          <Banner logo="hey" user={user}/>
+          <div className="btn btn-primary">push</div>
+          <Switch>
             <Route exact path="/" render={Home}/>
-            <Route exact path="/add" render={Add}/>
-            {/* <Route exact path={"/:id"} render={ (props) => (
+            <Route exact path="/add" render={Add}/> {/* <Route exact path={"/:id"} render={ (props) => (
               <Record name= { this.state.name } x={x}/>
             )}/> */}
-            <Route exact path='/form' render= {
-              (props) => (
-                <Form name="Foo" />
-              )
-            }/>
-            <Route exact path="/records" render= {
-              (props) => (
-                <Records records={ this.state.records }/>
-              )
-            }/>
-            
-            </Switch>
-              <p>{console.log(  4 === 4 ? true: false)}</p>
-            <form onSubmit={this.onSubmit}>
-              <input 
+            <Route exact path='/form' render= { (props) => ( <Form name="Foo" /> ) }/>
+            <Route
+              exact
+              path="/records"
+              render=
+              { (props) => ( <Records records={ this.state.records }/> ) }/>
+
+          </Switch>
+          <p>{console.log(4 === 4
+              ? true
+              : false)}</p>
+          <form onSubmit={this.onSubmit}>
+            <input
               type="text"
-              value={ this.state.value }
-              onChange={ this.onInput }
+              value={this.state.value}
+              onChange={this.onInput}
               placeholder="type the record here"/>
-              <button type="submit">Search</button>
-            </form>
-            
+            <button type="submit">Search</button>
+          </form>
+
         </div>
       </Router>
 
