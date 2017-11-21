@@ -40,26 +40,26 @@ class App extends Component {
   }
 
   componentWillMount() {
-    console.log("componentWillmount");
+    // console.log("componentWillmount");
   }
   componentDidMount() {
-    console.log('component did mount')
+    // console.log('component did mount')
   }
   componentWillReceiveProps(nextProps) {
-    console.log("componentWillReiceive props", nextProps);
+    // console.log("componentWillReiceive props", nextProps);
   }
   shouldComponentUpdate(nextProps, nextState) {
-    console.log("should component update", nextProps, nextState);
+    // console.log("should component update", nextProps, nextState);
     return true;
   }
   componentWillUpdate(nextProps, nextState) {
-    console.log("component will update", nextProps, nextState);
+    // console.log("component will update", nextProps, nextState);
   }
   componentDidUpdate(prevProps, prevState) {
-    console.log("componentDid update", prevProps, prevState);
+    // console.log("componentDid update", prevProps, prevState);
   }
   componentWillUnmount() {
-    console.log("componentWillunmount");
+    // console.log("componentWillunmount");
   }
   //pass method to the childs
   onGreet() {

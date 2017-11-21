@@ -7,6 +7,7 @@ export default class Records extends Component {
         super(props);
 
         this.state = {
+            record: [],
             value: '',
             id: '',
             name: '',
@@ -24,15 +25,21 @@ export default class Records extends Component {
     handleSubmit(event) {
         
         event.preventDefault();
+        // the name from the form 
         window.ipcRenderer.send("name", this.state.value);
         window.ipcRenderer.on("filtered", () => {
+            // console.log(this.props.records[0]);
+            let rawRecord = this.props.records[0];
+            let rawArray = Object.values(rawRecord);
+            var Record = rawArray.filter((item) => {
+                return item !== null;
+            })
+            console.log("array", Record);
+
 
             this.setState({
-                name: this.props.records[0].name,
-                id: this.props.records[0].id,
-                email: this.props.records[0].email,
-                pass: this.props.records[0].password,
-                web: this.props.records[0].web
+                record: Record,
+                value: ''
             });
 
         })
@@ -55,11 +62,15 @@ render () {
             <button type="Submit">find</button>
         </form>
         <ul>
-            <li>ID: {this.state.id}</li>
-            <li>NAME: {this.state.name}</li>
-            <li>LINK:<a href="{this.state.web}">{this.state.web}</a></li>
-            <li>PASS: {this.state.pass}</li>
-            <li>EMAIL: {this.state.email}</li>
+            {/* {
+                this.state.record.map((item, i) => {
+                return <li key={i}>{item}</li>
+            })} */}
+            <li>ID: {this.state.record[1]}</li>
+            <li>NAME: {this.state.record[0]}</li>
+            <li>LINK:<a href="{this.state.record[5]}">{this.state.record[5]}</a></li>
+            <li>PASS: {this.state.record[3]}</li>
+            <li>EMAIL: {this.state.record[0]}</li>
         </ul>
         </div>
     )

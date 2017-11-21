@@ -95,7 +95,7 @@ ipcMain.on('ping', () => {
 
 // Query for one record
 ipcMain.on("name", (e, name) => {
-    console.log(name);
+    // console.log(name);
     knex('keychain').where('name', name)
         .then((item) => {
             console.log(item);
