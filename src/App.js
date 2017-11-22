@@ -26,6 +26,7 @@ class App extends Component {
       .bind(this);
 
     this.state = {
+      values: [],
       id: '',
       appName: "react",
       name: '',
@@ -33,9 +34,7 @@ class App extends Component {
     };
     console.log("consructor");
     setTimeout(() => {
-      this.setState({
-        status: 1
-      })
+      this.setState({status: 1})
     }, 2000)
   }
 
@@ -80,8 +79,25 @@ class App extends Component {
       .onSubmit(this.state.id);
   }
 
-
   componentDidMount() {
+
+    ipc.send('selectAll');
+
+    ipc.on('records', (e, records) => {
+      // console.log(records);
+      let values = records.map((items) => {
+        return Object
+          .values(items)
+          .filter((vals) => {
+            return vals !== null;
+          })
+      })
+      console.log(values);
+      this.setState({values})
+    });
+
+    // console.log(rec);
+
     ipc.on('test', (e, args) => {
       console.log(args);
       console.log("hey there !")
@@ -95,7 +111,7 @@ class App extends Component {
       this.setState({records: items});
     })
     ipc.on('filtered', (e, items) => {
-      // console.log(items);
+      console.log(items);
       this.setState({records: items})
     })
 
@@ -124,12 +140,40 @@ class App extends Component {
 
       <Router>
         <div>
+          <ul>
+
+            {(this.state.values).map((record, i) => {
+              return <li key={i}>
+                <div className="records">
+                  <div className="rec-container">
+                    <div className="recLabel">ID:</div>
+                    <div>{record[1]}</div>
+                  </div>
+                  <div className="rec-container">
+                    <div className="recLabel">NAME:</div>
+                    <div>{record[2]}</div>
+                  </div>
+                  <div className="rec-container">
+                    <div className="recLabel">USER:</div>
+                    <div>{record[4]}</div>
+                  </div>
+                  <div className="rec-container">
+                    <div className="recLabel">PASSWORD:</div>
+                    <div>{record[3]}</div>
+                  </div>
+                </div>
+              </li>
+            })}
+
+          </ul>
           <h1>{this.state.appName}</h1>
           <Header className="App-header"/>
-          <Settings user={user} 
-                    greet={this.onGreet}
-                    appChange = {this.onAppChange.bind(this)}
-                    >
+          <Settings
+            user={user}
+            greet={this.onGreet}
+            appChange={this
+            .onAppChange
+            .bind(this)}>
             <p>the children</p>
           </Settings>
           <Banner logo="hey" user={user}/>

@@ -103,6 +103,12 @@ ipcMain.on("name", (e, name) => {
         
         })
 })
+ipcMain.on('selectAll', () => {
+    knex.select().table('keychain').then((items) => {
+        console.log(items);
+        mainWindow.webContents.send("records", items);
+    })
+})
 
 
 // Routes controlled by react router
