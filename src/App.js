@@ -6,11 +6,11 @@ import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import Home from './components/home';
 import Header from './components/Header';
 import Add from './components/add';
-import Record from "./components/record";
 import Records from "./components/Records";
 import Form from "./components/addForm";
 import Banner from "./components/Banner";
 import Settings from "./components/Settings";
+import List from "./components/List";
 const ipc = window.ipcRenderer;
 
 class App extends Component {
@@ -18,12 +18,7 @@ class App extends Component {
   constructor(props) {
     super(props);
 
-    this.onSubmit = this
-      .onSubmit
-      .bind(this);
-    this.onInput = this
-      .onInput
-      .bind(this);
+
 
     this.state = {
       values: [],
@@ -32,34 +27,12 @@ class App extends Component {
       name: '',
       records: []
     };
-    console.log("consructor");
-    setTimeout(() => {
-      this.setState({status: 1})
-    }, 2000)
+
+    this.onSubmit = this.onSubmit.bind(this);
+    this.onInput = this.onInput.bind(this);
+
   }
 
-  componentWillMount() {
-    // console.log("componentWillmount");
-  }
-  componentDidMount() {
-    // console.log('component did mount')
-  }
-  componentWillReceiveProps(nextProps) {
-    // console.log("componentWillReiceive props", nextProps);
-  }
-  shouldComponentUpdate(nextProps, nextState) {
-    // console.log("should component update", nextProps, nextState);
-    return true;
-  }
-  componentWillUpdate(nextProps, nextState) {
-    // console.log("component will update", nextProps, nextState);
-  }
-  componentDidUpdate(prevProps, prevState) {
-    // console.log("componentDid update", prevProps, prevState);
-  }
-  componentWillUnmount() {
-    // console.log("componentWillunmount");
-  }
   //pass method to the childs
   onGreet() {
     alert("error");
@@ -79,24 +52,21 @@ class App extends Component {
       .onSubmit(this.state.id);
   }
 
+
+    // CONNECTION THE ELECTRON
+  
   componentDidMount() {
 
     ipc.send('selectAll');
 
     ipc.on('records', (e, records) => {
       // console.log(records);
-      let values = records.map((items) => {
-        return Object
-          .values(items)
-          .filter((vals) => {
-            return vals !== null;
-          })
+
+      this.setState({
+        values: records
       })
-      console.log(values);
-      this.setState({values})
     });
 
-    // console.log(rec);
 
     ipc.on('test', (e, args) => {
       console.log(args);
@@ -118,10 +88,9 @@ class App extends Component {
   }
 
   render() {
-    // console.log("state is: ", this.state.name); console.log(this.state.records);
-    // testing props
+
     let x = 24;
-    // console.log(this.props)
+
     let user = {
       name: "john",
       lastName: "doe",
@@ -139,33 +108,9 @@ class App extends Component {
     return (
 
       <Router>
+      
         <div>
-          <ul>
 
-            {(this.state.values).map((record, i) => {
-              return <li key={i}>
-                <div className="records">
-                  <div className="rec-container">
-                    <div className="recLabel">ID:</div>
-                    <div>{record[1]}</div>
-                  </div>
-                  <div className="rec-container">
-                    <div className="recLabel">NAME:</div>
-                    <div>{record[2]}</div>
-                  </div>
-                  <div className="rec-container">
-                    <div className="recLabel">USER:</div>
-                    <div>{record[4]}</div>
-                  </div>
-                  <div className="rec-container">
-                    <div className="recLabel">PASSWORD:</div>
-                    <div>{record[3]}</div>
-                  </div>
-                </div>
-              </li>
-            })}
-
-          </ul>
           <h1>{this.state.appName}</h1>
           <Header className="App-header"/>
           <Settings
@@ -176,6 +121,9 @@ class App extends Component {
             .bind(this)}>
             <p>the children</p>
           </Settings>
+          <List
+            records={this.state.values}
+          />
           <Banner logo="hey" user={user}/>
           <div className="btn btn-primary">push</div>
           <Switch>
@@ -191,9 +139,7 @@ class App extends Component {
               { (props) => ( <Records records={ this.state.records }/> ) }/>
 
           </Switch>
-          <p>{console.log(4 === 4
-              ? true
-              : false)}</p>
+
           <form onSubmit={this.onSubmit}>
             <input
               type="text"
