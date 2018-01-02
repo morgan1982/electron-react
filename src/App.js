@@ -107,17 +107,18 @@ class App extends Component {
         "painting"
       ]
     }
-    console.log(this.state.records[0]);
-    console.log(classes);
     let obj = this.state.records.map((obj) => {
       return (
         <div
         key={obj.id}
         className={classes.record}
-        >
-          <div>name: {obj.name} email: {obj.email} pass: {obj.password}</div>
+        > 
+          <h1 className={classes.title}>{obj.name}</h1>
+          <div>email: {obj.email}</div>
+          <div>pass</div>
+          <div className={classes.pass}>{obj.password}</div>
         </div>
-      )
+      ) 
     })
 
     return (
@@ -145,9 +146,7 @@ class App extends Component {
           <div className="btn btn-primary">push</div>
           <Switch>
             <Route exact path="/" render={Home}/>
-            <Route exact path="/add" render={Add}/> {/* <Route exact path={"/:id"} render={ (props) => (
-              <Record name= { this.state.name } x={x}/>
-            )}/> */}
+            <Route exact path="/add" render={Add}/>
             <Route exact path='/form' render= { (props) => ( <Form name="Foo" /> ) }/>
             <Route
               exact
