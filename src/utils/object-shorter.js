@@ -1,4 +1,4 @@
-var obj = [
+ var obj = [
     {
         name: 'Diana',
         born: 1373925600000, // Mon, Jul 15 2013
@@ -28,7 +28,7 @@ var obj = [
     }
 ];
 
-
+// function sortener(items, param) {
 export default function sortener(items, param) {
 
     const params = items.map((item) => {

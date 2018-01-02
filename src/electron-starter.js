@@ -105,7 +105,7 @@ ipcMain.on("name", (e, name) => {
 })
 ipcMain.on('selectAll', () => {
     knex.select().table('keychain').then((items) => {
-        // console.log(items);
+        console.log(items); 
         mainWindow.webContents.send("records", items);
     })
 })
@@ -176,3 +176,21 @@ const mainMenuTemplate = [
         ]
     }
 ]
+if (process.env.NODE_ENV !== 'production') {
+    mainMenuTemplate.push({
+        label: 'dev tools',
+        submenu: [
+            {
+               label: 'Toggle dev tools',
+               accelerator: process.platform == 'darwin' ? 'Command+I' :
+               'Ctrl+I',
+               click(item, focusedWindow) {
+                   focusedWindow.toggleDevTools();
+               } 
+            },
+            {
+                role: 'reload'
+            }
+        ]
+    })
+}

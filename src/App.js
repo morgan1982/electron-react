@@ -60,10 +60,15 @@ class App extends Component {
     ipc.send('selectAll');
 
     ipc.on('records', (e, records) => {
-      // console.log(records);
-
+      // console.log('the records', records);
+      // console.log(records[0].name);
+      // let parsedRecords = JSON.parse(records);
+      // console.log(parsedRecords);
+      let values = [];
+      // values.push(parsedRecords);
+      console.log(values);
       this.setState({
-        values: records
+        records: records
       })
     });
 
@@ -104,6 +109,16 @@ class App extends Component {
         "painting"
       ]
     }
+    console.log(this.state.records[0]);
+    let obj = this.state.records.map((obj) => {
+      return (
+        <div
+        key={obj.id}
+        >
+          <div>name: {obj.name} email: {obj.email} pass: {obj.password}</div>
+        </div>
+      )
+    })
 
     return (
 
@@ -112,14 +127,17 @@ class App extends Component {
         <div>
 
           <h1>{this.state.appName}</h1>
+          {obj}
+          {/* <h1>{this.state.records[0]}</h1> */}
           <Header className="App-header"/>
+          {/* <p>{this.state.records}</p> */}
           <Settings
             user={user}
             greet={this.onGreet}
             appChange={this
             .onAppChange
             .bind(this)}>
-            <p>the children</p>
+            <h1>{this.state.values}</h1>
           </Settings>
           <List
             records={this.state.values}
