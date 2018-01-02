@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import './App.css';
+import classes from './App.css';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 
 //routes
@@ -11,6 +11,9 @@ import Form from "./components/addForm";
 import Banner from "./components/Banner";
 import Settings from "./components/Settings";
 import List from "./components/List";
+//utils
+import shortener from './utils/object-shorter';
+
 const ipc = window.ipcRenderer;
 
 class App extends Component {
@@ -60,15 +63,10 @@ class App extends Component {
     ipc.send('selectAll');
 
     ipc.on('records', (e, records) => {
-      // console.log('the records', records);
-      // console.log(records[0].name);
-      // let parsedRecords = JSON.parse(records);
-      // console.log(parsedRecords);
-      let values = [];
-      // values.push(parsedRecords);
-      console.log(values);
+      let shortedValues = shortener(records, 'name');
+      // console.log(shortedValues)
       this.setState({
-        records: records
+        records: shortedValues
       })
     });
 
@@ -110,10 +108,12 @@ class App extends Component {
       ]
     }
     console.log(this.state.records[0]);
+    console.log(classes);
     let obj = this.state.records.map((obj) => {
       return (
         <div
         key={obj.id}
+        className={classes.record}
         >
           <div>name: {obj.name} email: {obj.email} pass: {obj.password}</div>
         </div>
@@ -128,16 +128,15 @@ class App extends Component {
 
           <h1>{this.state.appName}</h1>
           {obj}
-          {/* <h1>{this.state.records[0]}</h1> */}
           <Header className="App-header"/>
-          {/* <p>{this.state.records}</p> */}
           <Settings
             user={user}
             greet={this.onGreet}
             appChange={this
             .onAppChange
-            .bind(this)}>
-            <h1>{this.state.values}</h1>
+            .bind(this)}
+            >
+            {this.state.values}
           </Settings>
           <List
             records={this.state.values}
