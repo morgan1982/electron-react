@@ -1,20 +1,42 @@
 import React from 'react';
-import logo from '../logo.svg';
+
+import shortener from '../utils/object-shorter';
+import classes from '../App.css';
 
 
 
-const Home = () => (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <h1 className="App-title">Welcome to React</h1>
-      </header>
 
 
-      <h1>hello</h1>
-      <hr/>
+const Home = (props) => {
+
+    let obj = props.records.map((obj) => {
+      return (
+        <div
+        key={obj.id}
+        className={classes.record}
+        > 
+          <h1 className={classes.title}>{obj.name}</h1>
+          <div>
+            <div>email: {obj.email}</div>
+            <div>url: {obj.web}</div>
+          </div>
+          <div>
+            <div>user: {obj.user}</div>
+          </div>
+          <div className={classes.passContainer}>pass
+            <div className={classes.pass}>{obj.password}</div>
+          </div>
+        </div>
+      ) 
+    })
+
+    return (
+      <div>
+        {obj}
     </div>
+    )
 
-  )
+
+  }
 
   export default Home;

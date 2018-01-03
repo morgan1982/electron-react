@@ -14,6 +14,7 @@ import List from "./components/List";
 //utils
 import shortener from './utils/object-shorter';
 
+
 const ipc = window.ipcRenderer;
 
 class App extends Component {
@@ -107,19 +108,7 @@ class App extends Component {
         "painting"
       ]
     }
-    let obj = this.state.records.map((obj) => {
-      return (
-        <div
-        key={obj.id}
-        className={classes.record}
-        > 
-          <h1 className={classes.title}>{obj.name}</h1>
-          <div>email: {obj.email}</div>
-          <div>pass</div>
-          <div className={classes.pass}>{obj.password}</div>
-        </div>
-      ) 
-    })
+
 
     return (
 
@@ -128,24 +117,11 @@ class App extends Component {
         <div>
 
           <h1>{this.state.appName}</h1>
-          {obj}
-          <Header className="App-header"/>
-          <Settings
-            user={user}
-            greet={this.onGreet}
-            appChange={this
-            .onAppChange
-            .bind(this)}
-            >
-            {this.state.values}
-          </Settings>
-          <List
-            records={this.state.values}
-          />
-          <Banner logo="hey" user={user}/>
-          <div className="btn btn-primary">push</div>
+          <Header className="App-header"/> 
+
+
           <Switch>
-            <Route exact path="/" render={Home}/>
+            <Route exact path="/" render={ (props) => ( <Home records={this.state.records}/>)}/>
             <Route exact path="/add" render={Add}/>
             <Route exact path='/form' render= { (props) => ( <Form name="Foo" /> ) }/>
             <Route
@@ -164,8 +140,20 @@ class App extends Component {
               placeholder="type the record here"/>
             <button type="submit">Search</button>
           </form>
-
+          <Banner logo="hey" user={user}/>
+          <div className="btn btn-primary">push</div>
+          <Settings
+            user={user}
+            greet={this.onGreet}
+            appChange={this
+            .onAppChange
+            .bind(this)}
+            >
+            {this.state.values}
+          </Settings>
+          <List records={this.state.values}/>
         </div>
+
       </Router>
 
     );
