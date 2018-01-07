@@ -29,7 +29,14 @@ class App extends Component {
       id: '',
       appName: "react",
       name: '',
-      records: []
+      records: [],
+      record: {
+        app: "",
+        url: "",
+        user: "",
+        pass: "",
+        email: ""
+      }
     };
 
     this.onSubmit = this.onSubmit.bind(this);
@@ -54,6 +61,30 @@ class App extends Component {
     this
       .props
       .onSubmit(this.state.id);
+  }
+  changeHandler = (e) => {
+    // const record = this.state.record;
+    // console.log(record);
+    //state[url] = value of the input for the url for instance
+    // console.log(e.target.value)
+    console.log(e.target.id)
+    let newState = {record: {
+      app: "",
+      url: "",
+      user: "",
+      pass: "",
+      email: ""
+    }};
+    newState.record[e.target.id] = e.target.value;
+    this.setState({
+      record: newState.record 
+    })
+  }
+
+  submitHandler = (e) => {
+    e.preventDefault();
+    const record = this.state.record;
+    console.log(record);
   }
 
 
@@ -122,7 +153,9 @@ class App extends Component {
 
           <Switch>
             <Route exact path="/" render={ (props) => ( <Home records={this.state.records}/>)}/>
-            <Route exact path="/add" render={Add}/>
+            <Route exact path="/add" render={(props) => (<Add 
+                                                          changed={(e) => this.changeHandler(e)}
+                                                          submited={(e) => this.submitHandler(e)}/>)}/>
             <Route exact path='/form' render= { (props) => ( <Form name="Foo" /> ) }/>
             <Route
               exact
