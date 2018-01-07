@@ -62,23 +62,27 @@ class App extends Component {
       .props
       .onSubmit(this.state.id);
   }
+
+  
   changeHandler = (e) => {
-    // const record = this.state.record;
-    // console.log(record);
-    //state[url] = value of the input for the url for instance
-    // console.log(e.target.value)
-    console.log(e.target.id)
-    let newState = {record: {
-      app: "",
-      url: "",
-      user: "",
-      pass: "",
-      email: ""
-    }};
-    newState.record[e.target.id] = e.target.value;
-    this.setState({
-      record: newState.record 
-    })
+    const record = [...this.state.record];
+    record[e.target.id] = e.target.value;
+    console.log(record);
+    // // console.log(record);
+    // //state[url] = value of the input for the url for instance
+    // // console.log(e.target.value)
+    // console.log(e.target.id)
+    // let newState = {record: {
+    //   app: "",
+    //   url: "",
+    //   user: "",
+    //   pass: "",
+    //   email: ""
+    // }};
+    // newState.record[e.target.id] = e.target.value;
+    // this.setState({
+    //   record: newState.record 
+    // })
   }
 
   submitHandler = (e) => {
