@@ -79,18 +79,25 @@ ipcMain.on("mainWindowLoaded", function ()  {
 ipcMain.on('ping', () => {
   console.log("ping is here");
   mainWindow.webContents.send("pong");
-//   insert test
-//   knex("keychain").insert({
-//       name: "udemy",
-//       web: "www.udemy.com",
-//       user: "John",
-//       password: "test",
-//       email: "JohnDoe@gmail.com",
-//   }).then(() => {
-//       console.log("record inserted")
-//   }).catch((e) => {
-//         console.log(e);
-//   });
+})
+
+// INSERT RECORD
+ipcMain.on('insert', (e, record) => {
+    console.log(record);
+
+      knex("keychain").insert({
+      id: record[1],
+      name: record[0].app,
+      web: record[0].email,
+      user: record[0].user,
+      password: record[0].pass,
+      email: record[0].email
+  }).then(() => {
+      console.log("record inserted")
+  }).catch((e) => {
+        console.log(e);
+  });
+
 })
 
 // Query for one record

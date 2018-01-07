@@ -65,30 +65,21 @@ class App extends Component {
 
   
   changeHandler = (e) => {
-    const record = [...this.state.record];
-    record[e.target.id] = e.target.value;
-    console.log(record);
-    // // console.log(record);
-    // //state[url] = value of the input for the url for instance
-    // // console.log(e.target.value)
-    // console.log(e.target.id)
-    // let newState = {record: {
-    //   app: "",
-    //   url: "",
-    //   user: "",
-    //   pass: "",
-    //   email: ""
-    // }};
-    // newState.record[e.target.id] = e.target.value;
-    // this.setState({
-    //   record: newState.record 
-    // })
+
+    const newState = {...this.state}
+    newState.record[e.target.id] = e.target.value;
+    this.setState(newState)
   }
 
   submitHandler = (e) => {
     e.preventDefault();
-    const record = this.state.record;
-    console.log(record);
+    const record = [this.state.record];
+    let id = this.state.records.length + 1;
+    record.push(id);
+    
+    ipc.send("insert", (e, record));
+    // console.log(this.state.records.length);
+    
   }
 
 
