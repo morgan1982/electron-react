@@ -9,7 +9,9 @@ const Add = (props) => {
         return (
         <div className="App" style={{ backgroundColor: "rgb(237, 239, 243)",
                                       margin: "2em",
-                                      border: "2px solid skyblue" }}>
+                                      border: "2px solid grey",
+                                      borderRadius: "10px",
+                                      padding: "5px" }}>
       <form className="form-horizontal" onSubmit={props.submited}>
         <div className="form-group">
           <label className="control-label col-sm-2">Site-App
@@ -38,7 +40,7 @@ const Add = (props) => {
             <input type="text" id="email" className="form-control" onChange={props.changed}/>
           </div>
         </div>
-        <button type="submit" className="btn btn-dark sub">Add Record</button>
+        <button type="submit" className="btn btn-dark sub" style={{ marginLeft: "17px" }}>Add Record</button>
       </form>
     </div>
         )
