@@ -12,10 +12,11 @@ let addWindow;
 
 function createWindow () {
   // Create the browser window.
-  mainWindow = new BrowserWindow({
+  mainWindow = new BrowserWindow({ 
                               width: 800,
                               height: 600,
-                              // frame: false,
+                              frame: false,
+                              resizable: false,
                               webPreferences: {
                                 nodeIntegration: false,
                                 preload: __dirname + '/preload.js'
@@ -79,6 +80,9 @@ ipcMain.on("mainWindowLoaded", function ()  {
 ipcMain.on('ping', () => {
   console.log("ping is here");
   mainWindow.webContents.send("pong");
+})
+ipcMain.on('devtoggler', () => {
+    mainWindow.webContents.openDevTools()
 })
 
 // INSERT RECORD

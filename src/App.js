@@ -78,8 +78,20 @@ class App extends Component {
     record.push(id);
     
     ipc.send("insert", (e, record));
+    this.setState({
+      record: {
+        app: "",
+        url: "",
+        user: "",
+        pass: "",
+        email: ""
+      }
+    })
     // console.log(this.state.records.length);
     
+  }
+  devHandler = () => {
+    ipc.send("devtoggler");
   }
 
 
@@ -140,7 +152,9 @@ class App extends Component {
 
       <Router>
       
-        <div>
+        <div className={classes.body}>
+        <div className={classes.devtools}
+             onClick={this.devHandler}>dev tools</div>
 
           <h1>{this.state.appName}</h1>
           <Header className="App-header"/> 
@@ -148,9 +162,11 @@ class App extends Component {
 
           <Switch>
             <Route exact path="/" render={ (props) => ( <Home records={this.state.records}/>)}/>
-            <Route exact path="/add" render={(props) => (<Add 
+            <Route exact path="/add" render={(props) => (<Add
+                                                          id="addform" 
                                                           changed={(e) => this.changeHandler(e)}
-                                                          submited={(e) => this.submitHandler(e)}/>)}/>
+                                                          submited={(e) => this.submitHandler(e)}
+                                                          values={this.state.record}/>)}/>
             <Route exact path='/form' render= { (props) => ( <Form name="Foo" /> ) }/>
             <Route
               exact

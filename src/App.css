@@ -1,3 +1,22 @@
+.body {
+  -webkit-app-region: drag;
+  /* background-color: rgb(129, 130, 133); */
+}
+.devtools {
+  -webkit-app-region: no-drag;
+  border-bottom: 1px solid grey;
+  width: 100px;
+  height: 25px;
+}
+.devtools:hover {
+  color: skyblue;
+  border-bottom: 2px solid skyblue;
+}
+#addform {
+  -webkit-app-region: no-drag;
+  color: black;
+}
+
 .App {
   text-align: center;
 }
@@ -8,6 +27,7 @@
 }
 
 .App-header {
+  -webkit-app-region: no-drag;
   background-color: #222;
   height: 150px;
   padding: 20px;
@@ -33,6 +53,7 @@ button {
 }
 
 .btn-group {
+  -webkit-app-region: no-drag;
   /* margin: 5px 10px; */
   display: flex;
   flex-direction: row;

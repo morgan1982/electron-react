@@ -1,0 +1,8 @@
+.btnGroup {
+    -webkit-app-region: no-drag;
+    /* margin: 5px 10px; */
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin: 10px 0px;
+  }
