@@ -43,6 +43,7 @@ const Add = (props) => {
         </div>
         <button type="submit" className="btn btn-dark sub" style={{ marginLeft: "17px" }}>Add Record</button>
       </form>
+      kolos
     </div>
         )
 

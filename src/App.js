@@ -36,7 +36,8 @@ class App extends Component {
         user: "",
         pass: "",
         email: ""
-      }
+      },
+      showForm: false
     };
 
     this.onSubmit = this.onSubmit.bind(this);
@@ -47,10 +48,6 @@ class App extends Component {
   //pass method to the childs
   onGreet() {
     alert("error");
-  }
-  // name comes from the method inside the settins component
-  onAppChange(name) {
-    this.setState({appName: name})
   }
 
   onInput(e) {
@@ -85,13 +82,21 @@ class App extends Component {
         user: "",
         pass: "",
         email: ""
-      }
+      },
+
     })
-    // console.log(this.state.records.length);
     
   }
   devHandler = () => {
     ipc.send("devtoggler");
+  }
+  formToggler = () => {
+    console.log("add form btb clicked")
+    let showForm;
+    this.state.showForm == false ? showForm = true : showForm = false;
+    this.setState({
+      showForm
+    }) 
   }
 
 
@@ -146,6 +151,19 @@ class App extends Component {
         "painting"
       ]
     }
+    let addForm = null;
+    if (this.state.showForm === true) {
+      addForm = (
+        <div className={classes.col2}>
+          <Add
+            id="addform" 
+            changed={(e) => this.changeHandler(e)}
+            submited={(e) => this.submitHandler(e)}
+            values={this.state.record}
+          />
+        </div>
+      )
+    }
 
 
     return (
@@ -153,10 +171,12 @@ class App extends Component {
       <Router>
       
         <div className={classes.body}>
+        <div className={classes.col1}>
         <div className={classes.devtools}
              onClick={this.devHandler}>dev tools</div>
-
-          <h1>{this.state.appName}</h1>
+             
+             <div type="button" className={classes.noDrag} onClick={this.formToggler}>toggle form</div>
+             <div className={classes.black }>testing</div>
           <Header className="App-header"/> 
 
 
@@ -175,27 +195,8 @@ class App extends Component {
               { (props) => ( <Records records={ this.state.records }/> ) }/>
 
           </Switch>
-
-          <form onSubmit={this.onSubmit}>
-            <input
-              type="text"
-              value={this.state.value}
-              onChange={this.onInput}
-              placeholder="type the record here"/>
-            <button type="submit">Search</button>
-          </form>
-          <Banner logo="hey" user={user}/>
-          <div className="btn btn-primary">push</div>
-          <Settings
-            user={user}
-            greet={this.onGreet}
-            appChange={this
-            .onAppChange
-            .bind(this)}
-            >
-            {this.state.values}
-          </Settings>
-          <List records={this.state.values}/>
+          </div>
+            {addForm}
         </div>
 
       </Router>

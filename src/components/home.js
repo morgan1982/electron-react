@@ -31,7 +31,7 @@ const Home = (props) => {
     })
 
     return (
-      <div>
+      <div className={classes.recordsContainer}>
         {obj}
     </div>
     )

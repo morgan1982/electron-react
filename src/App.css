@@ -2,6 +2,12 @@
   -webkit-app-region: drag;
   /* background-color: rgb(129, 130, 133); */
 }
+.noDrag {
+  -webkit-app-region: no-drag;
+}
+.black {
+  background-color: black;
+}
 .devtools {
   -webkit-app-region: no-drag;
   border-bottom: 1px solid grey;
@@ -12,10 +18,7 @@
   color: skyblue;
   border-bottom: 2px solid skyblue;
 }
-#addform {
-  -webkit-app-region: no-drag;
-  color: black;
-}
+
 
 .App {
   text-align: center;
@@ -24,8 +27,8 @@
 .App-logo {
   animation: App-logo-spin infinite 20s linear;
   height: 80px;
-}
-
+} 
+   
 .App-header {
   -webkit-app-region: no-drag;
   background-color: #222;
@@ -122,11 +125,11 @@ ul {
 li {
   margin-right: 10px;
 }
-.recLabel {
+/* .recLabel {
   font-weight: bold;
   color: orange;
   margin-left: 7px; 
-}
+} */
 .row {
   background: lightblue;
 }
@@ -134,34 +137,44 @@ li {
   padding: 20px 10px;
   border: 1px solid;
 }
-.record {
-  display: block;
-  margin: 20px auto;
-  width: 60%;
-  padding: 10px;
-  /* border: 2px solid grey; */
-  box-shadow: 2px 2px 2px grey;
-  /* color: rgb(65, 58, 58); */
-  /* display: flex; */
-  /* margin-bottom: 20px; */
-  /* background-color: rgb(238, 225, 225) */
 
-}
-.passContainer {
+/* .passContainer {
   border-bottom: 2px solid black;
   /* background-color: black; */
   /* margin: 10px; */
-  padding-bottom: 3px;
+  /* padding-bottom: 3px;
 
-}
-.pass {
+} */
+/* .pass {
   display: inline-block;
   font-weight: bold;
-  margin-left: 10px;
+  /* margin-left: 10px; */
   /* border-bottom:2px solid rgb(32, 30, 30); */
-}
+/* } 
 .title {
   color: rgb(57, 81, 216);
   text-align: center;
 
+} */
+.body {
+  display: grid;
+  grid-template-columns: 450px 350px; 
+}
+
+.col1 {
+  border: 2px solid grey;
+}
+
+.col2 {
+  border: 2px solid grey;
+}
+
+.recordsContainer {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.record {
+  box-shadow: 4px 2px 2px grey;
+  flex: 1 0 100px;
 }
